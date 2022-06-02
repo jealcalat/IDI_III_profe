@@ -35,3 +35,9 @@ libros/
 *.synctex.gz
 *.synctex.gz(busy)
 *.pdfsync
+
+# rmd
+*.rmd
+problem_statement_files/
+logo*.png
+*.css
