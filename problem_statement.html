@@ -4,7 +4,7 @@
     <title>Mi título</title>
     <meta charset="utf-8" />
     <meta name="author" content="Emmanuel Alcalá" />
-    <meta name="date" content="2022-05-26" />
+    <meta name="date" content="2022-06-22" />
     <script src="problem_statement_files/header-attrs/header-attrs.js"></script>
     <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
   </head>
@@ -112,7 +112,9 @@ El propósito de esta sesión es:
 --
   
 - Asegurarse de que los datos (la evidencia) que tenemos permitan responder o resolver el problema.
+--
 
+- Ninguna cantidad de competencia técnica o rigor estadístico puede compensar haber resuelto un problema inútil.
 ---
 
 # Cómo definir un problema
@@ -144,22 +146,60 @@ Supongamos que queremos predecir si alguien tiene cáncer a partir de imágenes 
   - Tampoco queremos mejorar el proceso de toma de imágenes -aunque puede ser un problema.
 --
 
-  - Un problema que nos atañe es: ¿puede mejorarse la tasa de predicciones correctas que hace un médico usando algoritmos de clasificación? La pregunta se descompone en:
-  
-    - .bermellon[Dado que] un conjunto de pacientes tienen cáncer, ¿qué proporción de casos identifican correctamente?
-    - ¿Podemos mejorar esa tasa?
+  - El problema: ¿puede mejorarse la tasa de predicciones correctas que hace un médico usando algoritmos de clasificación?
+--
+
+   - Dado un conjunto de pacientes tienen cáncer, ¿qué proporción de casos identifican correctamente? ¿Podemos mejorar esa tasa?
 
 ---
 
-Ya identificamos una un problema: el estado de cosas actual es `\(\hat{\pi}_\text{médico}\)` proporción de casos correctamente identificados, y queremos que `\(\hat{\pi}_\text{algoritmo}\geq \hat{\pi}_\text{médico}\)`.
+Ya identificamos algunas cosas:
 
-El siguiente paso es hacer una descripción concisa y clara del problema. 
+- El estado de cosas actual es `\(\hat{\pi}_\text{médico}\)`: proporción de casos correctamente identificados.
+- El esgado deseado es `\(\hat{\pi}_\text{algoritmo}\geq \hat{\pi}_\text{médico}\)`: minimizar la probabilidad de asignar un paciente a la clase equivocada (minimizar la probabilidad de cometer un error).
+--
 
-Después los aspectos técnicos y metodológicos. 
+El siguiente paso es hacer una descripción *concisa y clara* del problema.
+--
 
-- ¿Cómo evaluaremos nuestra solución en términos que sean comparables a nuestro *benchmark*? 
+- ¿Cómo evaluaremos nuestra solución en términos que sean comparables a nuestro *benchmark*?
+--
+
+- ¿Cómo saber cuándo detenernos, cuándo es suficientemente buena una solución?
+--
 
 - En este ejemplo, tenemos que plantear el problema en términos de teoría de la decisión. 
+
+---
+
+## Descripción del problema
+
+Sean `\(\mathbf{x}\)` un vector de intensidad de pixeles de una imagen, y `\(C_k\)` tal que:
+
+`\begin{align*}
+&amp;\text{ Presencia de cáncer es la clase } \mathcal{C}_1\\
+&amp;\text{ Ausencia de cáncer es la clase } \mathcal{C}_2
+\end{align*}`
+
+Escogemos una variable binaria `\(\mathbf{t}\)` tal que
+
+`\begin{align*}
+&amp;t = 0 \text{ si la clase es } \mathcal{C}_1\\
+&amp;t = 1 \text{ si la clase es } \mathcal{C}_2
+\end{align*}`
+
+---
+
+El problema consiste en dos pasos:
+
+- Un problema de inferencia, en donde determinaremos la distribución conjunta `\(p(\mathbf{x}, \mathcal{C}_k)\)` o `\(p(\mathbf{x}, t)\)` a partir de datos de entrenamiento.
+--
+
+- Un problema de decisión óptima, en el cual, una vez estimamos `\(p(\mathbf{x}, \mathcal{C}_k)\)` debemos *decidir* algo. En particular, dado que tenemos datos `\(\mathbf{x}\)` queremos saber la probabilidad de `\(\mathcal{C}_k\)` condicional a los datos obtenidos. Es decir, estamos interesados en
+
+$$
+p(\mathcal{C}_k|\mathbf{x}) = \frac{p(\mathbf{x}|\mathcal{C}_k)p(\mathcal{C}_k)}{p(\mathbf{x})}
+$$
 
 ---
 
