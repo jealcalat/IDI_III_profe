@@ -4,7 +4,7 @@
     <title>Mi título</title>
     <meta charset="utf-8" />
     <meta name="author" content="Emmanuel Alcalá" />
-    <meta name="date" content="2022-06-22" />
+    <meta name="date" content="2022-06-24" />
     <script src="problem_statement_files/header-attrs/header-attrs.js"></script>
     <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
   </head>
@@ -192,18 +192,196 @@ Escogemos una variable binaria `\(\mathbf{t}\)` tal que
 
 El problema consiste en dos pasos:
 
-- Un problema de inferencia, en donde determinaremos la distribución conjunta `\(p(\mathbf{x}, \mathcal{C}_k)\)` o `\(p(\mathbf{x}, t)\)` a partir de datos de entrenamiento.
+- Inferencia: determinar la distribución conjunta `\(p(\mathbf{x}, \mathcal{C}_k)\)` o `\(p(\mathbf{x}, t)\)` a partir de datos de entrenamiento.
 --
 
-- Un problema de decisión óptima, en el cual, una vez estimamos `\(p(\mathbf{x}, \mathcal{C}_k)\)` debemos *decidir* algo. En particular, dado que tenemos datos `\(\mathbf{x}\)` queremos saber la probabilidad de `\(\mathcal{C}_k\)` condicional a los datos obtenidos. Es decir, estamos interesados en
+- Decisión: una vez estimamos `\(p(\mathbf{x}, \mathcal{C}_k)\)` debemos *decidir* algo. Dado que tenemos datos `\(\mathbf{x}\)` queremos saber la probabilidad de `\(\mathcal{C}_k\)` condicional a los datos obtenidos.
 
 $$
 p(\mathcal{C}_k|\mathbf{x}) = \frac{p(\mathbf{x}|\mathcal{C}_k)p(\mathcal{C}_k)}{p(\mathbf{x})}
 $$
 
+- `\(p(\mathcal{C}_1)\)` es la probabilidad de que un paciente tenga cáncer antes de que tenga lugar la medición.
+
+- `\(p(\mathcal{C}_1 | \mathbf{x})\)` es la probabilidad posterior *después* medición.
+
 ---
 
-## Beware
+Se pueden tener varios objetivos:
+
+- Minimizar las asignaciones de `\(\mathbf{x}\)` a la clase incorrecta.
+--
+
+  - Partir `\(\mathbf{x}\)` en dos regiones de decisión `\(\mathcal{R}_k\)`, tal que los puntos en `\(\mathcal{R}_k\)` son asignados a la clase `\(\mathcal{C}_k\)`.
+--
+
+  - Un error ocurre cuando un valor de `\(x\)` que pertenece a `\(\mathcal{C}_1\)` es asignado a `\(\mathcal{C}_2\)` o viceversa. La probabilidad de un error es:
+
+`\begin{align*}
+p(\text{error}) =%
+    p(\mathbf{x} \in \mathcal{R}_1, \mathcal{C}_2) +%
+    p(\mathbf{x} \in \mathcal{R}_2, \mathcal{C}_1) =%
+    \underbrace{\int_{\mathcal{R}_1} p(\mathbf{x}, \mathcal{C}_2)\text{d}\mathbf{x}}_{\text{Error en la región 1}} +%
+    \underbrace{\int_{\mathcal{R}_2} p(\mathbf{x}, \mathcal{C}_1)\text{d}\mathbf{x}}_{\text{Error en la región 2}}
+\end{align*}`
+
+.pull-left[
+&lt;img src="./problem_statement_files/img/Figure1.24.png" width="70%" style="display: block; margin: auto;" /&gt;
+]
+
+.pull-right[
+`\(\hat{x}\)` es la regla de decisión. Conforme `\(\hat{x}\rightarrow x_0\)`, la zona roja desaparece, pero la azul crece.
+
+La suma de las áreas verde y azul es constante.
+]
+
+---
+Se pueden tener varios objetivos:
+
+- Minimizar las asignaciones de `\(\mathbf{x}\)` a la clase incorrecta.
+--
+
+- Optimizar otra variable. Hay dos tipos de asignaciones incorrectas:
+--
+
+  - Que tenga cáncer pero se clasifique como `\(\mathcal{C}_2\)`.
+--
+
+  - Que no tenga cáncer pero se clasifique como `\(\mathcal{C}_1\)`.
+--
+
+  - Cuando se minimiza la mala clasificación, se puede reducir solo el segundo error (área roja), pero no el primero (área azul).
+--
+
+  - Evidentemente, el primer error *es más costoso* que el segundo: las consecuencias de tener cáncer y no ser diagnosticado son peores que las de no tenerlo y ser diagnosticado.
+--
+
+  - Es mejor minimizar los errores del primer tipo.
+
+---
+
+- Función de costo:
+--
+  
+  - Podemos asignar diferentes pesos a cada tipo de diagnóstico, de tal manera que refleje el hecho de que un tipo de error es más costoso.
+--
+
+&lt;math xmlns="http://www.w3.org/1998/Math/MathML" display="block"&gt;
+  &lt;mtable columnalign="right center center center center left" rowspacing="4pt" columnspacing="1em"&gt;
+    &lt;mtr&gt;
+      &lt;mtd /&gt;
+      &lt;mtd&gt;
+        &lt;mrow class="MJX-TeXAtom-ORD"&gt;
+          &lt;mi mathvariant="normal"&gt;c&lt;/mi&gt;
+          &lt;mi mathvariant="normal"&gt;a&lt;/mi&gt;
+          &lt;mi mathvariant="normal"&gt;n&lt;/mi&gt;
+          &lt;mi mathvariant="normal"&gt;c&lt;/mi&gt;
+          &lt;mi mathvariant="normal"&gt;e&lt;/mi&gt;
+          &lt;mi mathvariant="normal"&gt;r&lt;/mi&gt;
+        &lt;/mrow&gt;
+      &lt;/mtd&gt;
+      &lt;mtd&gt;
+        &lt;mrow class="MJX-TeXAtom-ORD"&gt;
+          &lt;mi mathvariant="normal"&gt;n&lt;/mi&gt;
+          &lt;mi mathvariant="normal"&gt;o&lt;/mi&gt;
+          &lt;mi mathvariant="normal"&gt;r&lt;/mi&gt;
+          &lt;mi mathvariant="normal"&gt;m&lt;/mi&gt;
+          &lt;mi mathvariant="normal"&gt;a&lt;/mi&gt;
+          &lt;mi mathvariant="normal"&gt;l&lt;/mi&gt;
+        &lt;/mrow&gt;
+      &lt;/mtd&gt;
+    &lt;/mtr&gt;
+    &lt;mtr&gt;
+      &lt;mtd&gt;
+        &lt;mrow&gt;
+          &lt;mo fence="true" stretchy="true" symmetric="true"&gt;&lt;/mo&gt;
+          &lt;mtable rowspacing="4pt" columnspacing="1em"&gt;
+            &lt;mtr&gt;
+              &lt;mtd&gt;
+                &lt;mrow class="MJX-TeXAtom-ORD"&gt;
+                  &lt;mi mathvariant="normal"&gt;c&lt;/mi&gt;
+                  &lt;mi mathvariant="normal"&gt;a&lt;/mi&gt;
+                  &lt;mi mathvariant="normal"&gt;n&lt;/mi&gt;
+                  &lt;mi mathvariant="normal"&gt;c&lt;/mi&gt;
+                  &lt;mi mathvariant="normal"&gt;e&lt;/mi&gt;
+                  &lt;mi mathvariant="normal"&gt;r&lt;/mi&gt;
+                &lt;/mrow&gt;
+              &lt;/mtd&gt;
+            &lt;/mtr&gt;
+            &lt;mtr&gt;
+              &lt;mtd&gt;
+                &lt;mrow class="MJX-TeXAtom-ORD"&gt;
+                  &lt;mi mathvariant="normal"&gt;n&lt;/mi&gt;
+                  &lt;mi mathvariant="normal"&gt;o&lt;/mi&gt;
+                  &lt;mi mathvariant="normal"&gt;r&lt;/mi&gt;
+                  &lt;mi mathvariant="normal"&gt;m&lt;/mi&gt;
+                  &lt;mi mathvariant="normal"&gt;a&lt;/mi&gt;
+                  &lt;mi mathvariant="normal"&gt;l&lt;/mi&gt;
+                &lt;/mrow&gt;
+              &lt;/mtd&gt;
+            &lt;/mtr&gt;
+          &lt;/mtable&gt;
+          &lt;mo&gt;[&lt;/mo&gt;
+        &lt;/mrow&gt;
+      &lt;/mtd&gt;
+      &lt;mtd&gt;
+        &lt;mtable rowspacing="4pt" columnspacing="1em"&gt;
+          &lt;mtr&gt;
+            &lt;mtd&gt;
+              &lt;mn&gt;0&lt;/mn&gt;
+            &lt;/mtd&gt;
+          &lt;/mtr&gt;
+          &lt;mtr&gt;
+            &lt;mtd&gt;
+              &lt;mn&gt;1&lt;/mn&gt;
+            &lt;/mtd&gt;
+          &lt;/mtr&gt;
+        &lt;/mtable&gt;
+      &lt;/mtd&gt;
+      &lt;mtd&gt;
+        &lt;mtable rowspacing="4pt" columnspacing="1em"&gt;
+          &lt;mtr&gt;
+            &lt;mtd&gt;
+              &lt;mn&gt;1000&lt;/mn&gt;
+            &lt;/mtd&gt;
+          &lt;/mtr&gt;
+          &lt;mtr&gt;
+            &lt;mtd&gt;
+              &lt;mn&gt;0&lt;/mn&gt;
+            &lt;/mtd&gt;
+          &lt;/mtr&gt;
+        &lt;/mtable&gt;
+      &lt;/mtd&gt;
+      &lt;mtd&gt;
+        &lt;mrow&gt;
+          &lt;mo&gt;]&lt;/mo&gt;
+          &lt;mtable rowspacing="4pt" columnspacing="1em"&gt;
+            &lt;mtr&gt;
+              &lt;mtd /&gt;
+            &lt;/mtr&gt;
+            &lt;mtr&gt;
+              &lt;mtd /&gt;
+            &lt;/mtr&gt;
+          &lt;/mtable&gt;
+          &lt;mo fence="true" stretchy="true" symmetric="true"&gt;&lt;/mo&gt;
+        &lt;/mrow&gt;
+      &lt;/mtd&gt;
+    &lt;/mtr&gt;
+  &lt;/mtable&gt;
+&lt;/math&gt;
+
+  - El costo de ser diagnosticado como normal, si se tiene cáncer, es de 1000.
+--
+  
+  - El costo de ser diagnosticado con cáncer pero ser normal es de 1. 
+--
+  
+  - Ser diagnosticado correctamente tiene un costo de 0.
+
+---
+class: inverse,  middle
+
+## Ojo
 
 - Como se dijo antes, la ciencia de datos debe ser tan científica como otras ciencias.
 --
@@ -223,7 +401,6 @@ Si el procedimiento que seguimos resuelve en negativo una pregunta, no debemos d
 --
   
 Una respuesta negativa también tiene valor.
-
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
