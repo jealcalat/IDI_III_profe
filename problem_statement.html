@@ -4,9 +4,10 @@
     <title>Mi título</title>
     <meta charset="utf-8" />
     <meta name="author" content="Emmanuel Alcalá" />
-    <meta name="date" content="2022-06-24" />
+    <meta name="date" content="2022-06-25" />
     <script src="problem_statement_files/header-attrs/header-attrs.js"></script>
     <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+    <link rel="stylesheet" href="my-theme.css" type="text/css" />
   </head>
   <body>
     <textarea id="source">
@@ -16,7 +17,7 @@
 
 
 
-class: inverse, center, middle, title-slide
+class: center, middle, bg_karl
 
 &lt;style&gt;
 .title-slide .remark-slide-number {
@@ -65,21 +66,21 @@ class: inverse, center, middle, title-slide
 
 &lt;style&gt;
 blockquote {
-    background-color: #c9c9c9;
+    background-color: #D8D8D8;
 }
 &lt;/style&gt;
 
-# .bermellon[Proyecto Profesional]
+# .black[Proyecto Profesional]
 
-### .bermellon[Maestría en Ciencia de Datos]
+### .black[Maestría en Ciencia de Datos]
 
-## .gray[Emmanuel Alcalá]
+## .black[Emmanuel Alcalá]
 
 ### Departamento de Matemáticas y Física
 
 
 .center2[
-&lt;img src="logo_ITESO_fondoazul.png" width="579" /&gt;
+
 ]
 
 ---
@@ -105,36 +106,42 @@ El propósito de esta sesión es:
 - No saltarse a analizar los datos sin .bermellon[*antes*] haber identificado el problema. .blue[No es correcto tener una respuesta y luego buscar la pregunta].
 --
   
-  - .red[fishin expedition: proyecto que nunca se enmarcó correctamente y luego se tortura a los datos para encontrar relaciones *inesperadas*]
+  - .black[fishin expedition: proyecto que nunca se enmarcó correctamente y luego se tortura a los datos para encontrar relaciones *inesperadas*]
 --
   
 - No tomar proyectos que excedan las capacidades (por ejemplo, que no puedan terminarse en un tiempo razonable).
 --
   
 - Asegurarse de que los datos (la evidencia) que tenemos permitan responder o resolver el problema.
---
 
-- Ninguna cantidad de competencia técnica o rigor estadístico puede compensar haber resuelto un problema inútil.
 ---
 
 # Cómo definir un problema
 
-La ciencia de datos es tan científica como otras ciencias.
+&lt;blockquote&gt;
+.black[La ciencia de datos es tan científica como otras ciencias.]
+&lt;/blockquote&gt;
+
 --
 
-- Planteamiento: descripción concisa de un tema o condición para mejorar. Identifica una brecha entre *estado actual* y *estado deseado*. 
+- Planteamiento: descripción concisa de un tema o condición para mejorar. 
+  - Identifica una brecha entre **.orange[estado actual]** y **.orange[estado deseado]**. 
 --
 
-  - Identificar y explicar. Describir el contexto actual, en dónde ocurre el problema, qué impacto tiene, y cuál podría ser una mejora.
+- Describir el contexto actual, en dónde ocurre el problema, qué impacto tiene, y cuál podría ser una mejora.
 --
-  -
+  
+  - Este último punto es importante: ¿mejora con respecto a qué para quién(es)? 
+--
+  
+  - Mejorar solo con respecto a un algoritmo no necesariamente es una mejora en *utilidad*.
 
 
 ---
 
-## ejemplo
+## Ejemplo
 
-Supongamos que queremos predecir si alguien tiene cáncer a partir de imágenes de resonancia magnética.
+Supongamos que queremos predecir si alguien tiene cáncer a partir de imágenes de resonancia magnética&lt;sup&gt;1&lt;/sup&gt;.
 --
 
 - ¿Cuál es el problema?
@@ -151,48 +158,53 @@ Supongamos que queremos predecir si alguien tiene cáncer a partir de imágenes 
 
    - Dado un conjunto de pacientes tienen cáncer, ¿qué proporción de casos identifican correctamente? ¿Podemos mejorar esa tasa?
 
+.footnote[
+&lt;font size="-0.5"&gt;[1]   Bishop, C. (2006). &lt;em&gt;Pattern Recognition and Machine Learning&lt;/em&gt;. Ch. 1&lt;/font&gt;
+]
+
 ---
 
 Ya identificamos algunas cosas:
 
 - El estado de cosas actual es `\(\hat{\pi}_\text{médico}\)`: proporción de casos correctamente identificados.
-- El esgado deseado es `\(\hat{\pi}_\text{algoritmo}\geq \hat{\pi}_\text{médico}\)`: minimizar la probabilidad de asignar un paciente a la clase equivocada (minimizar la probabilidad de cometer un error).
+- Un estado deseado es `\(\hat{\pi}_\text{algoritmo}\geq \hat{\pi}_\text{médico}\)`: minimizar la probabilidad de asignar un paciente a la clase equivocada (minimizar la probabilidad de cometer un error).
 --
 
-El siguiente paso es hacer una descripción *concisa y clara* del problema.
+- El siguiente paso es hacer una descripción *concisa y clara* del problema. Preferiblemente, una definición **formal**.
 --
 
-- ¿Cómo evaluaremos nuestra solución en términos que sean comparables a nuestro *benchmark*?
+- Pensar en cómo evaluaremos y formulamos nuestra solución en términos que sean comparables a la solución estándar?
 --
 
 - ¿Cómo saber cuándo detenernos, cuándo es suficientemente buena una solución?
 --
 
-- En este ejemplo, tenemos que plantear el problema en términos de teoría de la decisión. 
+- En este ejemplo, tenemos que plantear el problema en términos de teoría de la decisión: usar los datos disponibles para tomar una decisión *óptima*.
 
 ---
 
 ## Descripción del problema
 
-Sean `\(\mathbf{x}\)` un vector de intensidad de pixeles de una imagen, y `\(C_k\)` tal que:
+Sean `\(\mathbf{x}\)` un vector de intensidad de pixeles de una imagen de RM, y `\(C_k\)` tal que:
 
 `\begin{align*}
 &amp;\text{ Presencia de cáncer es la clase } \mathcal{C}_1\\
 &amp;\text{ Ausencia de cáncer es la clase } \mathcal{C}_2
 \end{align*}`
 
-Escogemos una variable binaria `\(\mathbf{t}\)` tal que
+--
 
-`\begin{align*}
-&amp;t = 0 \text{ si la clase es } \mathcal{C}_1\\
-&amp;t = 1 \text{ si la clase es } \mathcal{C}_2
-\end{align*}`
+Notar que:
+--
+  
+- `\(\mathbf{x}\)` variará de paciente en paciente, por lo que se trata de una variable aleatoria. 
+- `\(C_k\)` es la variable que queremos predecir a partir de `\(\mathbf{x}\)`.
 
 ---
 
 El problema consiste en dos pasos:
 
-- Inferencia: determinar la distribución conjunta `\(p(\mathbf{x}, \mathcal{C}_k)\)` o `\(p(\mathbf{x}, t)\)` a partir de datos de entrenamiento.
+- Inferencia: determinar la distribución conjunta `\(p(\mathbf{x}, \mathcal{C}_k)\)` a partir de datos de entrenamiento.
 --
 
 - Decisión: una vez estimamos `\(p(\mathbf{x}, \mathcal{C}_k)\)` debemos *decidir* algo. Dado que tenemos datos `\(\mathbf{x}\)` queremos saber la probabilidad de `\(\mathcal{C}_k\)` condicional a los datos obtenidos.
@@ -203,7 +215,7 @@ $$
 
 - `\(p(\mathcal{C}_1)\)` es la probabilidad de que un paciente tenga cáncer antes de que tenga lugar la medición.
 
-- `\(p(\mathcal{C}_1 | \mathbf{x})\)` es la probabilidad posterior *después* medición.
+- `\(p(\mathcal{C}_1 | \mathbf{x})\)` es la probabilidad posterior *después* medición (se puede estimar directamente usando modelos discriminativos, como regresión logística).
 
 ---
 
@@ -226,7 +238,7 @@ p(\text{error}) =%
 \end{align*}`
 
 .pull-left[
-&lt;img src="./problem_statement_files/img/Figure1.24.png" width="70%" style="display: block; margin: auto;" /&gt;
+&lt;img src="./problem_statement_files/img/Figure1.24.png" width="80%" style="display: block; margin: auto;" /&gt;
 ]
 
 .pull-right[
@@ -373,16 +385,46 @@ Se pueden tener varios objetivos:
   - El costo de ser diagnosticado como normal, si se tiene cáncer, es de 1000.
 --
   
-  - El costo de ser diagnosticado con cáncer pero ser normal es de 1. 
+  - El costo de ser diagnosticado con cáncer pero ser normal es de 1 (i.e., sí hay un costo en este tipo de error).
 --
   
   - Ser diagnosticado correctamente tiene un costo de 0.
 
 ---
+
+- Suponer que para un valor nuevo de `\(\mathbf{x}\)`, la clase verdadera es `\(\mathcal{C}_k\)` y la asignamos a `\(\mathcal{C}_k\)`, en donde `\(j\)` puede o puede no ser igual a `\(k\)`.
+--
+  
+- Incurrimos en costo `\(L_{kj}\)` tomado de la matriz de costos.
+--
+  
+- El propósito ahora es reducir el costo esperado, que es una suma ponderada del costo `\(L_{kj}\)` con la probabilidad `\(p(\mathbf{x}, \mathcal{C}_k)\)`
+--
+  
+`\begin{align*}
+    \mathbf{E}[L]= \sum_j \sum_{k}\int_\mathcal{R_j} L_{kj}p(\mathbf{x}, \mathcal{C}_k)\ \text{d}\mathbf{x}
+\end{align*}`
+--
+  
+- Si un `\(\mathbf{x}\)` es asignado a `\(\mathcal{R}_i\)`, consideramos minimizar `\(\sum_k L_{kj}p(\mathbf{x}, \mathcal{C}_k)\)`, que es equivalente a minimizar `\(\sum_k L_{kj}p( \mathcal{C}_k|\mathbf{x})\)`.
+--
+  
+- Por ejemplo, si un paciente con dx `\(\mathbf{x}\)` tiene 0.1 de probabilidad de tener cáncer, `\(p(\mathcal{C}_{\text{cáncer}} | \mathbf{x}) = 0.1\)` y `\(p(\mathcal{C}_{\text{normal}} | \mathbf{x}) = 0.9\)`, el costo esperado es 
+
+
+`\begin{align*}
+  0\times 0.1 + 1\times 0.9 &amp;= 0.9, \text{ si se clasifica como cáncer}\\
+  1000\times 0.1 + 0\times 0.9 &amp;= 100, \text{ si se clasifica como normal}
+\end{align*}`
+
+---
 class: inverse,  middle
 
-## Ojo
+## Take-home message
 
+- Resolver un problema implica proponer una mejora, pero debemos definir en qué consiste una mejora (e.g., minimizar un error por sí mismo no es una mejora, debemos tener el cuenta el costo de minimizar ciertos errores).
+--
+  
 - Como se dijo antes, la ciencia de datos debe ser tan científica como otras ciencias.
 --
   
