@@ -4,7 +4,7 @@
     <title>Mi título</title>
     <meta charset="utf-8" />
     <meta name="author" content="Emmanuel Alcalá" />
-    <meta name="date" content="2022-06-25" />
+    <meta name="date" content="2022-07-07" />
     <script src="problem_statement_files/header-attrs/header-attrs.js"></script>
     <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
     <link rel="stylesheet" href="my-theme.css" type="text/css" />
@@ -17,7 +17,7 @@
 
 
 
-class: center, middle, bg_karl
+class: bg_karl
 
 &lt;style&gt;
 .title-slide .remark-slide-number {
@@ -42,7 +42,7 @@ class: center, middle, bg_karl
   margin: -1%;
   position: absolute;
   top: 80%;
-  left: 51%;
+  left: 30%;
   width: 190px;
   height: 128px;
   -ms-transform: translate(-50%, -50%);
@@ -58,6 +58,11 @@ class: center, middle, bg_karl
   z-index: 0;
 }
 
+.column-right {
+  float: right;
+  width: 50%;
+}
+
 .my-one-page-font {
   font-size: 20px;
 }
@@ -70,14 +75,15 @@ blockquote {
 }
 &lt;/style&gt;
 
-# .black[Proyecto Profesional]
+.column-right[
+  # .black[Reporte de Proyecto Profesionalizante]
 
-### .black[Maestría en Ciencia de Datos]
+  ### .black[Maestría en Ciencia de Datos]
 
-## .black[Emmanuel Alcalá]
+  ## .black[Emmanuel Alcalá]
 
-### Departamento de Matemáticas y Física
-
+  ### DMAF
+  ]
 
 .center2[
 
@@ -106,7 +112,7 @@ El propósito de esta sesión es:
 - No saltarse a analizar los datos sin .bermellon[*antes*] haber identificado el problema. .blue[No es correcto tener una respuesta y luego buscar la pregunta].
 --
   
-  - .black[fishin expedition: proyecto que nunca se enmarcó correctamente y luego se tortura a los datos para encontrar relaciones *inesperadas*]
+  - .black[fishing expedition: proyecto que nunca se enmarcó correctamente y luego se tortura a los datos para encontrar relaciones *inesperadas*]
 --
   
 - No tomar proyectos que excedan las capacidades (por ejemplo, que no puedan terminarse en un tiempo razonable).
@@ -420,33 +426,109 @@ Se pueden tener varios objetivos:
 ---
 class: inverse,  middle
 
+# Datos
+
+---
+## ¿Qué características deben tener los datos?
+
+Naturalmente, deben contener la información necesaria para responder la pregunta. Luego:
+
+--
+  
+.column-right[
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="img/data-quality.png" alt="&amp;lt;a href=&amp;quot;https://www.passionned.com/bi/data-quality/&amp;quot;&amp;gt;Fuente&amp;lt;/a&amp;gt;" width="95%" /&gt;
+&lt;p class="caption"&gt;&lt;a href="https://www.passionned.com/bi/data-quality/"&gt;Fuente&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+]
+
+.pull-left[
+- ¿Es representativo?
+- ¿Está completo? (tiene todos los datos que se supone que debe tener)
+- ¿Es posible tener fuentes extraordinarias de ruido? (e.g., industriales).
+- ¿Podría ver datos artificiales insertados?
+- ¿Los identificadores únicos son realmente únicos?
+- ¿Los datos se conforman de acuerdo a estándares? (e.g., fechas, cuentas de banco, etc).
+]
+
+---
+
+## Otros aspectos a cuidar de los datos
+
+- ¿Qué tan agregada/desagregada está una unidad observacional?  
+  - Si vamos a incluir más de una fuente, esto es crucial.
+--
+  
+- ¿Qué tan procesado o crudo está el dataset?
+--
+
+- ¿Qué criterios seguir para decidir incluir o excluir observaciones?
+--
+
+- Al excluir valores inválidos, ¿de qué tamaño queda? ¿Es suficiente?
+--
+
+- Contenido: ¿miden las variables lo que suponemos?
+--
+  
+- Comparabilidad de las variables: el grado en que fueron medidas las variables de la misma manera en diferentes observaciones. 
+--
+
+- ¿Tengo permiso de usarlos/publicarlos?
+
+---
+class: inverse, middle
+
+
+# .green[GIGO:]
+
+Los resultados de un análisis no pueden ser mejores que los datos usados.
+
+---
+
+# Repositorios
+
+- [FacSet](https://www.youtube.com/watch?v=IJS7PByCn2Y) para datos financieros (acceso institucional de ITESO).
+- [WorldBank](https://data.worldbank.org/) datos abiertos de varias categorías (desarrollo, financieros, consumo, etc).
+- [DataHub](https://datahub.io/collections) tiene varias colecciones de datos en varias categorías, como cambio climático, fútbol, películas, salud, etc.
+
+---
+class: inverse,  middle
+
 ## Take-home message
 
 - Resolver un problema implica proponer una mejora, pero debemos definir en qué consiste una mejora (e.g., minimizar un error por sí mismo no es una mejora, debemos tener el cuenta el costo de minimizar ciertos errores).
 --
   
-- Como se dijo antes, la ciencia de datos debe ser tan científica como otras ciencias.
---
-  
-- Uno de los problemas actuales de varias disciplinas científicas es el de la reproducibilidad: resultados no se pueden reproducir con nuevos experimentos.
---
-
-- ¿Podría suceder esto en CD? ¿Qué consecuencias tendría?
+- La ciencia de datos debe ser tan científica como otras ciencias.
 --
 
 - Si la CD tiene el propósito de adquirir valor de los datos, ¿qué valor tiene información que no se puede reproducir?
-
----
-class: inverse,  middle
-
-Si el procedimiento que seguimos resuelve en negativo una pregunta, no debemos desalentarnos, ni cambiar constantemente la pregunta hasta obtener un resultado que nos satisfaga (**.green[sesgo de confirmación]**).
 --
   
-Una respuesta negativa también tiene valor.
+- La calidad y adecuación de los datos es el segundo paso luego de definir el problema.
+--
+
+- No es muy productivo conseguir primero una base de datos y buscar después qué hacer con ella. Esto no es como la ciencia opera, y puede producir problemas graves (fishing expedition).
+--
+  
+- Datos de mala calidad resultan en soluciones de mala calidad. 
+--
+  
+- Por último:
+
+.black[
+  Si el procedimiento que seguimos resuelve en negativo una pregunta, no debemos desalentarnos, ni cambiar constantemente la pregunta hasta obtener un resultado que nos satisfaga (**.green[sesgo de confirmación]**).
+]
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
-<script>var slideshow = remark.create();
+<script>var slideshow = remark.create({
+"ratio": "16:9",
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
 if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
   window.dispatchEvent(new Event('resize'));
 });
@@ -524,7 +606,24 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
       links[i].target = '_blank';
     }
   }
-})();</script>
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
 
 <script>
 slideshow._releaseMath = function(el) {
