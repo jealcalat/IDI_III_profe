@@ -1,0 +1,118 @@
+---
+title: "Plantilla en Quarto"
+author: Emmanuel Alcalá
+date: 14/07/2022
+format:
+  pdf: 
+    # cite-method: biblatex
+    # toc: true # descomentar solo si se quiere tabla de contenidos
+    number-sections: true
+    colorlinks: true
+bibliography: references.bib
+csl: apa.csl
+lang: es
+jupyter: python3
+fig-pos: 'h'
+---
+
+Requerimientos para usar Quarto 
+
+1. [Instalar quarto](https://quarto.org/docs/get-started/)
+2. Instalar un editor de texto. Recomiendo [VScode](https://quarto.org/docs/get-started/hello/vscode.html). Si es en VScode, instalar la [extensión ](https://marketplace.visualstudio.com/items?itemName=quarto.quarto).
+  - Para usar con RStudio, ver [aquí](https://quarto.org/docs/get-started/hello/rstudio.html).
+3. Si se va a trabajar con Python debe configurarse apropiadamente. En VScode seleccionar el intérprete de Python que se quiere usar (e.g., de conda).
+4. Para renderizar en pdf debe instalarse `tinytex`. Abrir terminal y escribir 
+
+`quarto tools install tinytex`
+
+# Título
+
+El título de tu projecto. Debe ser conciso y reflejar el argumento principal. En ocasiones es bueno plantearlo como pregunta, otras veces como una afirmación.
+
+# Introducción
+
+Para estructurar un proyecto por primera vez es recomendable seguir alguna estructura particular, estandarizada.
+
+La aplicación [Coockiecutter](https://drivendata.github.io/cookiecutter-data-science/) provee una estructura estándar que parece adecuada para esto.
+
+Para algunos ejemplos de reportes técnicos de proyectos, revisa los proyectos finales del curso CS229: Machine Learning de Standford.
+
+- [2021](http://cs229.stanford.edu/proj2021spr/).
+- [2019](http://cs229.stanford.edu/proj2019aut/).
+- [2014](http://cs229.stanford.edu/projects2014.html).
+
+## Definición del problema o pregunta
+
+De acuerdo con la primera sesión.
+
+# Datos
+
+Aquí describes los datos que usaste, sus fuentes, variables, etc. Deberá contener la siguiente información:
+
+1. Justificación concisa de por qué el conjunto de datos elegido es relevanta para el problema elegido.
+2. Describir las fuentes de los datos.
+3. Describir qué procesamiento se hizo para dejarlos en estado usable.
+4. Describir las variables que contienen los datos (e.g., codebook, en caso de que se usen abreviaturas para las variables).
+
+# Métodos y Análisis
+
+La figura @fig-ml muestra el proceso que estaremos siguiendo en esta fase. 
+
+*IDI-III tratará principamente de estudiar el problema, limpiar y transformar los datos y seleccionar las variables*, pero también comenzaremos a escribir y familiarizarnos con las herramientas de publicación (en este caso, Quarto).
+
+![Proceso típico de proyecto de DS. Tomado de @geron2019hands.](figs/ml_approach.png){#fig-ml}
+
+1. Análisis exploratorio. Añadir tablas, gráficos exploratorios, etc. Esto no es propiamente un resultado, sino un análisis que se realiza para justificar otras decisiones.
+2. Si se realizan transformaciones en una variable (e.g., se log-transformó, se exponenció, se escaló, se normalizó, etc) o cualquier ingeniería de características, extracción, etc., a partir de los datos exploratorios. Justificar la decisión.
+3. Descripción de los métodos, como algoritmos, benchmarks, métricas de comparación (e.g., $RMSE$) etc. *No se colocan esos resultados aquí*, solo se menciona qu+e se utilizó.
+
+Quarto soporta renderización de ecuaciones usando la sintaxis de \LaTeX. Ver este [artículo](https://quarto.org/docs/authoring/markdown-basics.html#equations) y [este](https://qmd4sci.njtierney.com/math.html) para ver cómo escribir matemáticas. 
+
+# Resultados
+
+En esta sección se colocan los resultados principales, como tablas de comparación, gráficos, etc. Por ejemplo, si se probó un algoritmo con respecto a otros tres, se coloca la ejecución en diversas métricas. 
+
+Las figuras y tablas deben ir acompañadas de una etiqueta y una breve descripción. Se pueden referenciar usando `@{label}` en donde `label` en este caso específico es `fig-polar`. La referencia renderizada se verá así @fig-polar.
+
+```{python}
+#| label: fig-polar
+#| echo: false
+#| fig-cap: "Esta es la leyenda de una figura."
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+r = np.arange(0, 2, 0.01)
+theta = 2 * np.pi * r
+fig, ax = plt.subplots(subplot_kw={'projection': 'polar'})
+ax.plot(theta, r)
+ax.set_rticks([0.5, 1, 1.5, 2])
+ax.grid(True)
+plt.show()
+```
+
+Las tablas pueden hacerse con Markdown
+
+| Col1 | Col2 | Col3 |
+|------|------|------|
+| A    | B    | C    |
+| E    | F    | G    |
+| A    | G    | G    |
+
+: Leyenda de tabla {#tbl-letters}
+
+Ver la tabla @tbl-letters.
+
+# Referencias
+
+Para citar, usar `(@alcala2021statistical)` que se renderiza como (@alcala2021statistical). La entrada `@alcala2021statistical` debe estar tal cual en el archivo `referencias.bib`. Las referencias en formato de bibtex se pueden obtener desde Google Scholar.
+
+Para imprimir las referencias hay que colocar
+
+```
+::: {#refs}
+:::
+```
+
+::: {#refs}
+:::
