@@ -1,5 +1,6 @@
 libros/
 .idea
+.vscode
 
 # latex
 ## Core latex/pdflatex auxiliary files:
