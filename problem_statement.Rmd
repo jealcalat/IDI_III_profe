@@ -275,7 +275,7 @@ p(\text{error}) =%
 
 .pull-left[
 ```{r, echo = FALSE, out.width="80%", fig.align = 'center'}
-knitr::include_graphics("./problem_statement_files/img/Figure1.24.png")
+knitr::include_graphics("./img/Figure1.24.png")
 ```
 ]
 
