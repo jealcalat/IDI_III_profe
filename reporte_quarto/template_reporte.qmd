@@ -25,6 +25,14 @@ Requerimientos para usar Quarto
 
 `quarto tools install tinytex`
 
+5. El uso de código de python requiere configurar adecuadamente el `PATH` de [python](https://quarto.org/docs/computations/python.html#vs-code) y el kernel de jupyter. En el encabezado, agregar 
+
+```{yaml}
+jupyter: python3
+```
+
+En VScode se debe seleccionar el intérprete de Python, usando `ctrl+shift+p` (command palette) y escribiendo `Python interpreter`. En mi caso, selecciono un intérprete en un ambiente de `conda`.
+
 # Título
 
 El título de tu projecto. Debe ser conciso y reflejar el argumento principal. En ocasiones es bueno plantearlo como pregunta, otras veces como una afirmación.
