@@ -133,11 +133,30 @@ etc,etc
 
 ```{python}
 #| echo: false
+#| tbl-cap: Ejemplo de codebook.
+# Alternativamente, la leyenda (caption) se puede poner en 
+# df.to_latex(*args, caption="Ejemplo de codebook.")
 import pandas as pd
-d = {'abreviatura': ["mif", "bmi", "Q25"],
-     'variable': ["mean income per family", "body mass index", "question 25"]
+from IPython.display import Latex
+# diccionario de datos
+d = {
+  'Abreviatura': ["mif", "bmi", "Q25"],
+  'Variable': ["mean income per family", "body mass index", "question 25"]
 }
+# crar data frame
 df = pd.DataFrame(data=d)
+# aplicar estilo usando style.to_latex
+dfs = df.style.format(subset="Variable", formatter=str.capitalize)\
+              .hide(axis="index")
+# display latex
+Latex(
+  dfs.to_latex(
+    position_float="centering", 
+    hrules=True, 
+    position='h',
+    column_format='cc'
+    )
+)
 ```
 
 
@@ -162,7 +181,7 @@ En esta sección se colocan los resultados principales, como tablas de comparaci
 Las figuras y tablas deben ir acompañadas de una etiqueta y una breve descripción. Se pueden referenciar usando `@{label}` en donde `label` en este caso específico es `fig-polar`. La referencia renderizada se verá así @fig-polar.
 
 ```{python}
-#| label: fig-polar
+#| label: fig-polar 
 #| echo: false
 #| fig-cap: "Esta es la leyenda de una figura."
 
@@ -216,8 +235,10 @@ Para imprimir las referencias hay que colocar lo siguiente
 ::: {#refs}
 :::
 ```
-Que se verá de la siguiente manera (notar que coloqué dos citas: Gerón y López-Cárdenas et al....).
 
-::: {#refs}
+Que se verá de la siguiente manera (notar que coloqué dos citas: Gerón y López-Cárdenas et al).
+
+
+::: {#refs}thon
 :::
 
