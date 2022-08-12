@@ -138,7 +138,6 @@ d = {'abreviatura': ["mif", "bmi", "Q25"],
      'variable': ["mean income per family", "body mass index", "question 25"]
 }
 df = pd.DataFrame(data=d)
-
 ```
 
 
@@ -177,7 +176,6 @@ ax.plot(theta, r)
 ax.set_rticks([0.5, 1, 1.5, 2])
 ax.grid(True)
 plt.show()
-
 ```
 
 Las tablas pueden hacerse con Markdown
