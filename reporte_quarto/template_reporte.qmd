@@ -6,6 +6,9 @@ format:
   pdf: 
     # cite-method: biblatex
     # toc: true # descomentar solo si se quiere tabla de contenidos
+    # documentclass: scrartcl # por defecto, KOMA-Script class
+                              # otras opciones: article, report
+    # papersize: letter # otras opciones, a4
     number-sections: true
     colorlinks: true
 bibliography: references.bib
@@ -18,20 +21,56 @@ fig-pos: 'h'
 Requerimientos para usar Quarto 
 
 1. [Instalar quarto](https://quarto.org/docs/get-started/)
-2. Instalar un editor de texto. Recomiendo [VScode](https://quarto.org/docs/get-started/hello/vscode.html). Si es en VScode, instalar la [extensión ](https://marketplace.visualstudio.com/items?itemName=quarto.quarto).
-  - Para usar con RStudio, ver [aquí](https://quarto.org/docs/get-started/hello/rstudio.html).
-3. Si se va a trabajar con Python debe configurarse apropiadamente. En VScode seleccionar el intérprete de Python que se quiere usar (e.g., de conda).
+2. Instalar un editor de texto. Recomiendo [VScode](https://quarto.org/docs/get-started/hello/vscode.html). Si es en VScode, instalar la [extensión de Quarto para VScode](https://marketplace.visualstudio.com/items?itemName=quarto.quarto).
+  - Para usar con RStudio, ver [aquí](https://quarto.org/docs/get-started/hello/rstudio.html). 
+3. Si se va a trabajar con Python debe configurarse apropiadamente. En VScode seleccionar el intérprete de Python que se quiere usar (e.g., de conda). Presionar `ctrl+shift+p` (command palette) y escribir `Python interpreter`, seleccionar el intérprete deseado.
+
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.6\linewidth]{2022-08-11-12-45-59.png}
+  \caption{Intérprete de Python en VScode.}
+\end{figure}
+
+En RStudio, instalar primero la librería `reticulate` y enlistar los environments de conda
+
+```r
+install.packages('reticulate')
+library(reticulate)
+conda_list()
+```
+
+Lo anterior da lo siguiente:
+
+```
+  name                   python
+1 base /opt/anaconda/bin/python
+```
+
+Escoger el environment
+
+```r
+use_condaenv(condaenv = '/opt/anaconda/bin/python')
+```
+
+Luego de esto, en la pestaña de Tools de RStudio, seleccionamos Python, luego en Python interpreter Select..., en Conda Environments aparecerá
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.7\textwidth]{2022-08-11-18-41-44.png}
+  \label{fig:figX2}
+  \caption{Intérprete de Python en RStudio.}
+\end{figure}
+
 4. Para renderizar en pdf debe instalarse `tinytex`. Abrir terminal y escribir 
 
-`quarto tools install tinytex`
+`quarto tools install tinytex` 
 
 5. El uso de código de python requiere configurar adecuadamente el `PATH` de [python](https://quarto.org/docs/computations/python.html#vs-code) y el kernel de jupyter. En el encabezado, agregar 
 
 ```{yaml}
 jupyter: python3
 ```
-
-En VScode se debe seleccionar el intérprete de Python, usando `ctrl+shift+p` (command palette) y escribiendo `Python interpreter`. En mi caso, selecciono un intérprete en un ambiente de `conda`.
 
 # Título
 
@@ -41,7 +80,29 @@ El título de tu projecto. Debe ser conciso y reflejar el argumento principal. E
 
 Para estructurar un proyecto por primera vez es recomendable seguir alguna estructura particular, estandarizada.
 
-La aplicación [Coockiecutter](https://drivendata.github.io/cookiecutter-data-science/) provee una estructura estándar que parece adecuada para esto.
+La aplicación [Coockiecutter](https://drivendata.github.io/cookiecutter-data-science/) provee una estructura estándar que parece adecuada para esto, sin embargo, puede ser demasiado. Yo prefiero una estructura como esta
+
+```sh
+parent_dir/
+|_ project_name/
+|   |_ data_processed/
+|   |_ data_raw/
+|   |_ docs/
+|   |   |_ 00_analysis.qmd
+|   |_ figures/
+|   |_ scripts/
+|       |_ python/
+|       |_ r/
+|_ Readme.md
+```
+
+En ``project_name` puede ser `IDI-III`, o lo que ustedes quieran. La jerarquía de directorios en linux/unix se podría crear fácilmente con el siguiente comando
+
+```sh
+mkdir -p project_name/{scripts/{r,python},data_raw,data_processed,figures,docs}
+```
+
+Probablemente en PowerShell de Windows se pueda hacer algo similar, pero actualmente es recomendable instalar el [Windows Subsystem for Linux (WSL)](https://docs.microsoft.com/en-us/windows/wsl/install). Nunca es mala idea tener la potencia del shell de unix/linux a la mano.
 
 Para algunos ejemplos de reportes técnicos de proyectos, revisa los proyectos finales del curso CS229: Machine Learning de Standford.
 
@@ -51,22 +112,41 @@ Para algunos ejemplos de reportes técnicos de proyectos, revisa los proyectos f
 
 ## Definición del problema o pregunta
 
-De acuerdo con la primera sesión.
+De acuerdo con la primera sesión. Puedes encontrar las diapositivas [aquí](https://rpubs.com/jealcalat/reporte-proyecto-idi-iii).
 
 # Datos
 
 Aquí describes los datos que usaste, sus fuentes, variables, etc. Deberá contener la siguiente información:
 
-1. Justificación concisa de por qué el conjunto de datos elegido es relevanta para el problema elegido.
+1. Justificación concisa de por qué el conjunto de datos elegido es relevante para el problema elegido.
 2. Describir las fuentes de los datos.
 3. Describir qué procesamiento se hizo para dejarlos en estado usable.
-4. Describir las variables que contienen los datos (e.g., codebook, en caso de que se usen abreviaturas para las variables).
+4. Describir las variables que contienen los datos. Por ejemplo, un codebook en caso de que se usen abreviaturas para las variables. Un codebook en formato csv se vería así
+
+```csv
+abreviatura,variable
+mif,mean income per family
+bmi,body mass index
+Q25,question 25
+etc,etc
+```
+
+```{python}
+#| echo: false
+import pandas as pd
+d = {'abreviatura': ["mif", "bmi", "Q25"],
+     'variable': ["mean income per family", "body mass index", "question 25"]
+}
+df = pd.DataFrame(data=d)
+
+```
+
 
 # Métodos y Análisis
 
 La figura @fig-ml muestra el proceso que estaremos siguiendo en esta fase. 
 
-*IDI-III tratará principamente de estudiar el problema, limpiar y transformar los datos y seleccionar las variables*, pero también comenzaremos a escribir y familiarizarnos con las herramientas de publicación (en este caso, Quarto).
+*IDI-III tratará principalmente de estudiar el problema, limpiar y transformar los datos y seleccionar las variables*, pero también comenzaremos a escribir y familiarizarnos con las herramientas de publicación (en este caso, Quarto).
 
 ![Proceso típico de proyecto de DS. Tomado de @geron2019hands.](figs/ml_approach.png){#fig-ml}
 
@@ -97,6 +177,7 @@ ax.plot(theta, r)
 ax.set_rticks([0.5, 1, 1.5, 2])
 ax.grid(True)
 plt.show()
+
 ```
 
 Las tablas pueden hacerse con Markdown
@@ -113,14 +194,32 @@ Ver la tabla @tbl-letters.
 
 # Referencias
 
-Para citar, usar `(@alcala2021statistical)` que se renderiza como (@alcala2021statistical). La entrada `@alcala2021statistical` debe estar tal cual en el archivo `referencias.bib`. Las referencias en formato de bibtex se pueden obtener desde Google Scholar.
+Para citar, usar `(@alcala2021statistical)` que se renderiza como (@alcala2021statistical). La entrada `@alcala2021statistical` debe estar tal cual en el archivo `referencias.bib`. Las referencias en formato de bibtex se pueden obtener desde Google Scholar. El formato tiene la siguiente estructura
 
-Para imprimir las referencias hay que colocar
+```{bib}
+@inproceedings{alcala2021statistical,
+  author    = {López-Cárdenas, Patricia G. and Alcalá, Emmanuel and 
+               Sánchez-Torres, Juan Diego and Araujo, Elsie},
+  booktitle = {2021 18th International Conference on Electrical
+               Engineering, Computing Science and Automatic Control (CCE)},
+  title     = {A Resampling Approach for the Data-Based Optimization 
+               of Nanosensors},
+  year      = {2021},
+  volume    = {},
+  number    = {},
+  pages     = {1-4},
+  doi       = {10.1109/CCE53527.2021.9633114}
+}
+```
+
+Para imprimir las referencias hay que colocar lo siguiente
 
 ```
 ::: {#refs}
 :::
 ```
+Que se verá de la siguiente manera (notar que coloqué dos citas: Gerón y López-Cárdenas et al....).
 
 ::: {#refs}
 :::
+
