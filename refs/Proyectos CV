@@ -1,0 +1,34 @@
+Proyectos
+
+1. Detección de objetos usando OpenCV & sklearn
+
+Catálogo de ropa. El primer paso será usar OpenCV para extraer los objetos para catalogar, 
+y asignarles una etiqueta. E.g., detectar pantalones de acuerdo a su forma, crear un csv
+con la dirección de la imagen extraída y su correspondiente etiqueta.
+
+El siguiente paso es realizar la clasificación con algún algoritmo supervisado (en el link
+de abajo usan k-NN, que podría ser una primera aproximación, pero hay mejores algoritmos).
+
+El reto está en encontrar imágenes.
+
+URL: https://medium.datadriveninvestor.com/computer-vision-fruit-recognition-4f2f7a780e00
+
+2. Detección de objetos usando OpenCV & DL
+
+Algo similar al anterior, pero hay que estudiar este paper
+
+https://arxiv.org/pdf/1712.00580v9.pdf
+
+En la página de Papers with code tienen repositorios útiles
+
+https://paperswithcode.com/paper/fruit-recognition-from-images-using-deep
+
+3. Reproducir algún proyecto de Papers with Code
+
+Un ejemplo sería alguno de los proyectos mostrados en Papers para este dataset:
+
+https://paperswithcode.com/dataset/in-shop
+
+como este
+
+https://paperswithcode.com/paper/deepfashion-powering-robust-clothes
