@@ -3,7 +3,7 @@
 - [ ] [Definir el problema](#definir-el-problema) y/o formular un panorama general para dicho problema.
 - [ ] [Obtener los datos](#obtener-los-datos).
 - [ ] [Explorar los datos](#explorar-datos) para obtener ideas, intuiciones, y armar un plan de trabajo.
-- [ ] Preparar los datos para exponer patrones subyacentes usando algoritmos.
+- [ ] [Preparar los datos](#preparar-los-datos) para exponer patrones subyacentes usando algoritmos.
 - [ ] Explorar diferentes modelos, y realizar una lista escogiendo los mejores de acuerdo a alguna métrica (e.g., RMSE).
 - [ ] Afinar los modelos (e.g., reentrenamiento haciendo una búsqueda exhaustiva en un rango de parámetros) y combinarlos en una solución mayor.
 - [ ] Presentar la solución.
@@ -14,13 +14,13 @@
 2. Cómo será usada la solución.
 3. Cuáles son las soluciones actuales alternativas (de haberlas).
 4. Definición del problema propiamente, es decir, formular los aspectos de forma abstracta con lenguaje de matemáticas. 
-5. Restringe el rango de soluciones para el problema. Por ejemplo, ¿dirías que el problema es supervizado/no supervizado, online/offline?
+5. Restringe el rango de soluciones para el problema. Por ejemplo, ¿dirías que el problema es supervisado/no supervisado, online/offline?
 6. Cómo deberás medir la ejecución del modelo.
-7. ¿La forma de medir la ejecución se alínea con los objetivos del negocio?
+7. ¿La forma de medir la ejecución se alinea con los objetivos del negocio?
 8. ¿Cuál es el nivel de ejecución mínima para cumplir con el objetivo del negocio?
 9. ¿Se puede usar la solución en problemas *comparables*? ¿Se pueden usar la experiencia o las herramientas?
 10. ¿Existe experticia humana disponible para el problema?
-11. Lista las asunciones que has heco hasta ahora.
+11. Lista las asunciones que has hecho hasta ahora.
 12. Verifica si las asunciones se cumplen.
 
 ## Obtener los datos
@@ -35,8 +35,8 @@ La obtención de datos suele ser un cuello de botella. Nececitas datos limpios, 
 5. Obtén los datos.
 6. Convierte los datos en un formato que puedas manipular fácilmente (e.g., csv) sin cambiar los datos en sí.
 7. **Asegúrate** de que la información sensible ha sido omitida (nombres, direcciones, etc; anonimízalos).
-8. Revisa qué tipo de datos tienes (¿son series de tiempo, datos geofráficos, una combinación de diferentes tipos?).
-9. Toma una muestra de prueba (test set), sepárala y no la uses. 
+8. Revisa qué tipo de datos tienes (¿son series de tiempo, datos geográficos, una combinación de diferentes tipos?).
+9. Toma una muestra de prueba (test set), separarla y no la uses. 
 
 ## Explorar datos
 
@@ -59,3 +59,23 @@ Si existen expertos en este tipo de datos, no dudes en buscar su ayuda.
 10. Documenta lo que has aprendido sobre los datos
 
 ## Preparar los datos
+
+>Notas
+> - Trabaja en copias de los datos (deja el original intacto).
+> - Escribir funciones para todas las transformaciones que apliques, de tal manera que:
+>     - Puedas aplicarlo fácilmente la próxima vez que tengas datos frescos
+>     - Apliques las mismas transformaciones en futuros proyectos
+>     - Limpies y prepares el conjunto de prueba
+
+1. Limpieza de datos
+   1. Arreglar o remover outliers
+   2. Rellenar datos perdidos (e.g., usando imputación múltiple, la media, o la mediana), o quitar las filas o columnas con NAs
+2. Selección/ingeniería de características 
+   1. Remueve los atributos/variables que no proveen información para la tarea (opcional)
+   2. Discretiza variables continuas, etc.
+   3. Descompón características
+   4. Añade transformaciones prometedoras (e.g., log-transformar, transformar con raíz cuadrada, etc., para volver normal)
+3. Normaliza o estandariza las características
+   1. E.g., Unit-based normalization.
+   2. Esto es importante cuando tienes variables de diferentes escalas
+
