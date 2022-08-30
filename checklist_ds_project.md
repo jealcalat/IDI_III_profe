@@ -79,3 +79,4 @@ Si existen expertos en este tipo de datos, no dudes en buscar su ayuda.
    1. E.g., Unit-based normalization.
    2. Esto es importante cuando tienes variables de diferentes escalas
 
+## 
