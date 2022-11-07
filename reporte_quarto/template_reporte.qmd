@@ -3,12 +3,16 @@ title: "Plantilla en Quarto"
 author: Emmanuel Alcalá
 date: 14/07/2022
 format:
-  pdf: 
-    # cite-method: biblatex
-    # toc: true # descomentar solo si se quiere tabla de contenidos
-    # documentclass: scrartcl # por defecto, KOMA-Script class
-                              # otras opciones: article, report
-    # papersize: letter # otras opciones, a4
+  # pdf: 
+  #   # cite-method: biblatex
+  #   # toc: true # descomentar solo si se quiere tabla de contenidos
+  #   # documentclass: scrartcl # por defecto, KOMA-Script class
+  #                             # otras opciones: article, report
+  #   # papersize: letter # otras opciones, a4
+  #   number-sections: true
+  #   colorlinks: true
+  docx:
+    reference-doc: formato_reporte_estudio_de_caso_2019.docx
     number-sections: true
     colorlinks: true
 bibliography: references.bib
