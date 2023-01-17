@@ -1,13 +1,21 @@
-# IDI III 
+<figure>
+<p align="center">
+  <img src="./img/idi_3_largo.png" width='50%' />
+      <figcaption></figcaption>
+</p>
+</figure>
+
 
 Profesor: Emmanuel Alcalá
-Horario: Viernes de 6pm-8pm
+Horario: Por definir
 
 Clase para el desarrollo de un proyecto para la obtención de grado en Maestría en Análisis de Datos.
 
 ---
 
-[Plantilla para el Reporte Técnico en Quarto](/reporte_quarto/template_reporte.qmd)
+- [Plantilla para el Reporte Técnico en Word](Estructura_TOG_RPP.docx)
+
+- [Guía de aprendizaje](Gu%C3%ADa_de_Aprendizaje_IDI_3_P2023.pdf)
 
 Renderizado el pdf se puede ver [aquí](/reporte_quarto/template_reporte.pdf)
 
