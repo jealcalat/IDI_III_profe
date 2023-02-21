@@ -1,0 +1,107 @@
+% Plantilla de LaTeX para el trabajo recepcional de MCD
+% Modificado por última vez:
+% Emmanuel Alcalá
+% 20 de febrero de 2023
+
+\documentclass[nobib,justified,twoside]{tufte-book}
+\include{files/preamble}
+
+% \restylefloat{figure}
+% \floatstyle{plaintop} % set floatstyle after restyling figure
+% \restylefloat{table}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Title page metadata
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Author
+\def\myauthor{Joey Ramone} 
+% Thesis title
+\def\mytitle{Título del trabajo} 
+% Degree: choose between
+\def\mydegree{Maestro en Ciencia de Datos}
+% My departament
+\def\mydepartament{Departamento de Matemáticas y Física}
+% Date (Month, year)
+\def\mydate{\today} 
+% Advisors
+\def\myadvisor{Dr. Willie E. Coyote}
+\def\mycoadvisor{Dr. Homer J. Simpson}
+%Readers
+\def\readerI{Dr. Frederick Flintstone}
+\def\readerII{Dr. Farrokh Bulsara}
+%Academic Advisor
+\def\academic{Dr. Maryam Mirzajani}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Front matter
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\frontmatter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Titlepage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\cleardoublepage
+\include{files/titlepage}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Approval form
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\cleardoublepage
+%\include{files/approval_form}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Abstract
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\cleardoublepage
+\include{chapters/abstractpage}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Table of contents
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\cleardoublepage
+% \dominitoc
+\tableofcontents
+%
+\cleardoublepage
+\listoffigures
+%
+\cleardoublepage
+\listoftables
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Dedication
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\cleardoublepage
+\include{chapters/dedication}
+
+\cleardoublepage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Start the main matter (normal chapters)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\mainmatter
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Introduction
+\include{chapters/chapter01}
+%Chapter 2
+\include{chapters/chapter02}
+%Chapter 3
+\include{chapters/chapter03}
+%Chapter 4
+\include{chapters/chapter04}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% The back matter contains appendices, bibliographies, indices, glossaries, etc.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\backmatter
+
+\bibliography{files/sample-handout}
+\bibliographystyle{ieeetr}
+\label{bibliography}
+\printindex
+
+
+
+\end{document}

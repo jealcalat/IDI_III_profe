@@ -1,0 +1,131 @@
+\chapter{Introducción}
+\label{ch:Intro}
+% \minitoc
+
+\textit{En este capítulo se presenta el contexto del objeto de estudio, la justificación del objeto de estudio, la definición del problema y los objetivos generales y específicos.}
+
+\newpage
+
+\section{Contexto}
+
+\textit{Esta sección debe dedicarse a hacer una introducción del trabajo. Contextualizar el trabajo que se presenta. Puede incluir una descripción breve de algunos antecedentes relevantes que detonaron la idea de desarrollar el trabajo. Se expande y se detalla un poco el resumen descrito anteriormente. Al final de esta sección se describe de manera breve el contenido de cada uno de los capítulos del documento. Debe tener una longitud de entre 1 y 5 páginas.}
+
+\section{Justificación}
+
+\textit{Razones científicas, económicas, y/o sociales que muestren la necesidad, pertinencia e importancia de este trabajo}
+
+\section{Problema}
+
+\textit{Describir problema práctico, definir problema científico.}
+
+\section{Objetivos}
+
+\subsection{Objetivo General}
+
+\textit{Definir de ser necesario. No incluir métodos o procedimientos.}
+
+
+\subsection{Objetivos Específicos}
+
+\textit{Definir de forma numerada, no incluir métodos o procedimientos.}
+
+\bigskip
+
+\textbf{Figuras}
+
+Se puede referenciar una figura usando el comando \verb|\ref{SomeLabel}|. Por ejemplo:
+
+La \cref{fig:figSample} muestra X. 
+
+Se escribiría como 
+
+\verb|La \cref{fig:figSample} muestra X.|
+
+\begin{figure}[htb]
+    \centering
+    \includegraphics{example-image-a}
+    \caption{Ejemplo de figura. La leyenda de la figura debe ser concisa y descriptiva. }
+    \label{fig:figSample}
+\end{figure}
+
+
+\textbf{Tablas}
+\bigskip
+
+\begin{table}[htb]
+  \small
+\begin{center}
+\begin{tabular}{|l|c|c|c|c|c|c|c|c|}
+\hline
+Distancia (km) & 2     & 3     & 5       & 7       & 8       & 10      & 12      & 13      \\\hline
+Precio (\$)    & 441,5 & 661,5 & 1.101,5 & 1.541,5 & 1.761,5 & 2.201,5 & 2.641,5 & 2.861,5 \\ \hline
+\end{tabular}
+\end{center}
+\caption{Costo por distancia recorrida.}
+\end{table}
+
+\begin{table}[htb]\index{typefaces!sizes}
+  \footnotesize%
+  \begin{center}
+    \begin{tabular}{lccl}
+      \toprule
+      \LaTeX{} size & Font size & Leading & Used for \\
+      \midrule
+      \verb+\tiny+         &  5 &  6 & sidenote numbers \\
+      \verb+\scriptsize+   &  7 &  8 & \na \\
+      \verb+\footnotesize+ &  8 & 10 & sidenotes, captions \\
+      \verb+\small+        &  9 & 12 & quote, quotation, and verse environments \\
+      \verb+\normalsize+   & 10 & 14 & body text \\
+      \verb+\large+        & 11 & 15 & \textsc{b}-heads \\
+      \verb+\Large+        & 12 & 16 & \textsc{a}-heads, \textsc{toc} entries, author, date \\
+      \verb+\LARGE+        & 14 & 18 & handout title \\
+      \verb+\huge+         & 20 & 30 & chapter heads \\
+      \verb+\Huge+         & 24 & 36 & part titles \\
+      \bottomrule
+    \end{tabular}
+  \end{center}
+  \caption{A list of \LaTeX{} font sizes as defined by the \TL document classes.}
+  \label{tab:font-sizes}
+\end{table}
+
+La \cref{tab:font-sizes} muestra X. 
+
+\textbf{Ecuaciones}
+
+Numerar las ecuaciones
+
+\begin{equation} \label{eq:eu_eqn}
+\mathbf{a}^{\top}\mathbf{x} = b
+\end{equation}
+
+Referenciarlas de forma similar a las figuras, sin mencionar la palabra ``ecuación''. Por ejemplo \verb|Resolviendo \cref{eq:eu_eqn}| escribirá \textcolor{blue}{Resolviendo} \cref{eq:eu_eqn}
+
+
+\textbf{Bibliografía}
+
+Bibliografía Estilo IEEE: 
+
+\url{http://www.ieee.org/documents/ieeecitationref.pdf } 
+
+El orden de la bibliografía debe ser el orden en el que aparece en el documento. Toda bibliografía puesta en esta sección deberá estar citada dentro del texto. La forma de hacer la cita cuando es una sola es [1], si son varias y salteadas es [3], [5], [8]. Si son varias consecutivas es [5]-[8]. Combinadas es [2]-[6], [9]. 
+
+El formato de la bibliografía es como lista numerada simple, sin tabla. 
+
+El formato de cada una es como se describe a continuación y dependiendo del tipo. Ejemplo:
+
+[1] E.D. Lipson and B.D. Horowitz, "Photosensory reception and transduction," inSensory Receptors and Signal Transduction, J.L. Spudich and B.H. Satir, Eds.  New York: Willey-Liss, 1991.  pp. 1-64. 
+
+[2] J. Lacan.  "The insistence of the letter in the unconscious,"  in Psychoanalysis and Language, David Lodge, Ed., J. Rose, Trans.,  Ithaca, NY: Cornell University Press, 1992, pp. 123-34. 
+
+[3] K.A. Nelson, R.J. Dwayne Miller, D.R. Lutz, and M.D. Fayer,  "Optical generation of turntable ultrasonic waves," Journal of Applied Physics, vol. 53, no. 2, Feb., pp. 1144-1149. 
+
+[4] J. Allemang, "Social studies in gibberish," Quarterly Reviews of Doublespeak, vol. 20, no. 1, pp. 9-10.  
+
+[5] J. Fallows, "Network technology," Atlantic Monthly, Jul.,  pp. 34-36, 1994. 
+
+
+\textit{Ejemplo}
+
+Fulano de tal dijo X \cite{Bringhurst2005}, sin embargo perengano de tal dijo Y \cite{Tufte1990}.
+
+Checar Bibliografía \ref{bibliography}
